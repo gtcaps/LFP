@@ -1,0 +1,44 @@
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.exe.config
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.exe
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.pdb
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.xml
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbprojAssemblyReference.cache
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.Form1.resources
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.Resources.resources
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbproj.GenerateResource.cache
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbproj.CoreCompileInputs.cache
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.exe
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.xml
+C:\Users\Aybson M\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.pdb
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.exe.config
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.exe
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.pdb
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\Analizador.xml
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbprojAssemblyReference.cache
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.Form1.resources
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.Resources.resources
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbproj.GenerateResource.cache
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbproj.CoreCompileInputs.cache
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.exe
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.xml
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.pdb
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\itextsharp.dll
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\bin\Debug\itextsharp.xml
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.vbproj.CopyComplete
+C:\Users\aybso\OneDrive\Documents\Visual Studio 2017\Templates\Analizador\Analizador\obj\Debug\Analizador.AcercaDe.resources
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\Analizador.exe.config
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\Analizador.exe
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\Analizador.pdb
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\Analizador.xml
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\itextsharp.dll
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\bin\Debug\itextsharp.xml
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.vbprojAssemblyReference.cache
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.AcercaDe.resources
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.Form1.resources
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.Resources.resources
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.vbproj.GenerateResource.cache
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.vbproj.CoreCompileInputs.cache
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.vbproj.CopyComplete
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.exe
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.xml
+C:\Users\aybso\OneDrive\Imágenes\Analizador\Analizador\obj\Debug\Analizador.pdb
