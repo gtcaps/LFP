@@ -3,13 +3,14 @@ Imports iTextSharp
 Imports iTextSharp.text
 Imports iTextSharp.text.pdf
 Imports System.IO
+Imports Analizador.Token
 
 Public Class Form1
 
     'LISTAS PARA GUARDAR LOS TOKENS
     Dim listaTokensValidos As New ArrayList
     Dim listaTokensErroneos As New ArrayList
-    Dim listaErrores As New ArrayList
+    Public listaErrores = New ArrayList
     Dim listaSimbolos() As Integer = {Asc("{"), Asc("}"), Asc(";"), Asc("("), Asc(")"), Asc("["), Asc("]"),
         Asc(":"), Asc("*"), 34, Asc("+"), Asc("/"), Asc(","), Asc("="), Asc("_"), Asc("."), Asc("-")}
     Dim palabrasReservadas() As String = {"instrucciones", "variables", "texto", "interlineado",
@@ -96,7 +97,7 @@ Public Class Form1
                         '   Cualquier Simbolo de la lista 
                         '------------------------------------------------------------
                     Else
-                        listaTokensValidos.Add(New Token("SIMBOLO " + c.GetValue(i), c.GetValue(i), fila, columna))
+                        listaTokensValidos.Add(New Token(tipoSimbolo(c(i).ToString.Trim), c.GetValue(i), fila, columna))
                         Continue For
                     End If
                     '------------------------------------------------------------
@@ -128,18 +129,18 @@ Public Class Form1
                         Continue For
                     ElseIf (Asc(c.GetValue(i)) = 34) Then
                         If (palabrasReservadas.Contains(texto)) Then
-                            listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                         Else
-                            listaTokensValidos.Add(New Token("ID", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.ID, texto, fila, columna))
                         End If
                         texto = ""
                         estadoActual = 3
                         Continue For
                     ElseIf (Asc(c.GetValue(i)) = Asc("-")) Then
                         If (palabrasReservadas.Contains(texto)) Then
-                            listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                         Else
-                            listaTokensValidos.Add(New Token("ID", texto, 0, 0))
+                            listaTokensValidos.Add(New Token(Tipo.ID, texto, 0, 0))
                         End If
                         texto = ""
                         estadoActual = 4
@@ -147,20 +148,20 @@ Public Class Form1
                         Continue For
                     Else
                         If (palabrasReservadas.Contains(texto)) Then
-                            listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                         Else
-                            listaTokensValidos.Add(New Token("ID", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.ID, texto, fila, columna))
                         End If
-                        listaTokensValidos.Add(New Token("SIMBOLO " + c.GetValue(i), c.GetValue(i), fila, columna))
+                        listaTokensValidos.Add(New Token(tipoSimbolo(c(i).ToString.Trim), c.GetValue(i), fila, columna))
                         texto = ""
                         estadoActual = 0
                         Continue For
                     End If
                 ElseIf (Char.IsWhiteSpace(c.GetValue(i)) Or i = (c.Length - 1)) Then 'ESPACIO EN BLANCO
                     If (palabrasReservadas.Contains(texto)) Then
-                        listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                     Else
-                        listaTokensValidos.Add(New Token("ID", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.ID, texto, fila, columna))
                     End If
                     texto = ""
                     estadoActual = 0
@@ -183,19 +184,19 @@ Public Class Form1
                     Continue For
                 ElseIf (listaSimbolos.Contains(Asc(c.GetValue(i)))) Then
                     If (palabrasReservadas.Contains(texto)) Then
-                        listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                     Else
-                        listaTokensValidos.Add(New Token("ID", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.ID, texto, fila, columna))
                     End If
-                    listaTokensValidos.Add(New Token("SIMBOLO " + c.GetValue(i), c.GetValue(i), fila, columna))
+                    listaTokensValidos.Add(New Token(tipoSimbolo(c(i).ToString.Trim), c.GetValue(i), fila, columna))
                     texto = ""
                     estadoActual = 0
                     Continue For
                 ElseIf (Char.IsWhiteSpace(c.GetValue(i)) Or Char.ToString(c.GetValue(i)).Equals("#")) Then 'ESPACIO EN BLANCO
                     If (palabrasReservadas.Contains(texto)) Then
-                        listaTokensValidos.Add(New Token("ID PALABRA RESERVADA", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.PALABRA_RESERVADA, texto, fila, columna))
                     Else
-                        listaTokensValidos.Add(New Token("ID", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.ID, texto, fila, columna))
                     End If
                     texto = ""
                     estadoActual = 0
@@ -209,7 +210,7 @@ Public Class Form1
             If (estadoActual = 3) Then 'texto = texto + c.GetValue(i).ToString
                 If (Asc(c.GetValue(i)) = 34) Then
                     texto = texto + c.GetValue(i).ToString
-                    listaTokensValidos.Add(New Token("CADENA DE TEXTO", texto, fila, columna))
+                    listaTokensValidos.Add(New Token(Tipo.CADENA_DE_TEXTO, texto, fila, columna))
                     texto = ""
                     estadoActual = 0
                     Continue For
@@ -227,7 +228,7 @@ Public Class Form1
                     estadoActual = 4
                     Continue For
                 ElseIf (Char.IsLetter(c.GetValue(i))) Then 'texto = texto + c.GetValue(i).ToString
-                    listaTokensValidos.Add(New Token("SIMBOLO " + texto, texto, fila, columna))
+                    listaTokensValidos.Add(New Token(tipoSimbolo(texto.ToString.Trim), texto, fila, columna))
                     texto = ""
                     texto = texto + c.GetValue(i)
                     estadoActual = 2
@@ -238,19 +239,19 @@ Public Class Form1
                         estadoActual = 5
                         Continue For
                     ElseIf (Asc(c.GetValue(i)) = 34) Then
-                        listaTokensValidos.Add(New Token("NUMERO ENTERO", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.NUMERO_ENTERO, texto, fila, columna))
                         texto = ""
                         estadoActual = 3
                         Continue For
                     Else
-                        listaTokensValidos.Add(New Token("NUMERO ENTERO", texto, 0, 0))
-                        listaTokensValidos.Add(New Token("SIMBOLO " + c.GetValue(i), c.GetValue(i), fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.NUMERO_ENTERO, texto, 0, 0))
+                        listaTokensValidos.Add(New Token(tipoSimbolo(c(i).ToString.Trim), c.GetValue(i), fila, columna))
                         texto = ""
                         estadoActual = 0
                         Continue For
                     End If
                 ElseIf (Char.IsWhiteSpace(c.GetValue(i))) Then 'ESPACIO EN BLANCO
-                    listaTokensValidos.Add(New Token("NUMERO ENTERO", texto, fila, columna))
+                    listaTokensValidos.Add(New Token(Tipo.NUMERO_ENTERO, texto, fila, columna))
                     texto = ""
                     estadoActual = 0
                     Continue For
@@ -275,7 +276,7 @@ Public Class Form1
                         If (n > 1) Then
                             listaTokensErroneos.Add(New Token("ERROR NUMERO DECIMAL", texto, fila, columna))
                         Else
-                            listaTokensValidos.Add(New Token("NUMERO DECIMAL", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.NUMERO_DECIMAL, texto, fila, columna))
                         End If
                         texto = ""
                         estadoActual = 3
@@ -285,9 +286,9 @@ Public Class Form1
                         If (n > 1) Then
                             listaTokensErroneos.Add(New Token("ERROR NUMERO DECIMAL", texto, fila, columna))
                         Else
-                            listaTokensValidos.Add(New Token("NUMERO DECIMAL", texto, fila, columna))
+                            listaTokensValidos.Add(New Token(Tipo.NUMERO_DECIMAL, texto, fila, columna))
                         End If
-                        listaTokensValidos.Add(New Token("SIMBOLO " + c.GetValue(i), c.GetValue(i), fila, columna))
+                        listaTokensValidos.Add(New Token(tipoSimbolo(c(i).ToString.Trim), c.GetValue(i), fila, columna))
                         texto = ""
                         estadoActual = 0
                         Continue For
@@ -297,7 +298,7 @@ Public Class Form1
                     If (n > 1) Then
                         listaTokensErroneos.Add(New Token("ERROR NUMERO DECIMAL", texto, fila, columna))
                     Else
-                        listaTokensValidos.Add(New Token("NUMERO DECIMAL", texto, fila, columna))
+                        listaTokensValidos.Add(New Token(Tipo.NUMERO_DECIMAL, texto, fila, columna))
                     End If
                     texto = ""
                     estadoActual = 0
@@ -310,6 +311,95 @@ Public Class Form1
 
     End Sub
 
+    Private Function tipoSimbolo(simbolo As String) As Tipo
+        If (simbolo.Equals("{")) Then
+            Return Tipo.LLAVE_IZQ
+        ElseIf (simbolo.Equals("}")) Then
+            Return Tipo.LLAVE_DER
+        ElseIf (simbolo.Equals(";")) Then
+            Return Tipo.PUNTO_Y_COMA
+        ElseIf (simbolo.Equals("(")) Then
+            Return Tipo.PARENTESIS_IZQ
+        ElseIf (simbolo.Equals(")")) Then
+            Return Tipo.PARENTESIS_DER
+        ElseIf (simbolo.Equals("[")) Then
+            Return Tipo.CORCHETE_IZQ
+        ElseIf (simbolo.Equals("]")) Then
+            Return Tipo.CORCHETE_DER
+        ElseIf (simbolo.Equals(":")) Then
+            Return Tipo.DOS_PUNTOS
+        ElseIf (simbolo.Equals("*")) Then
+            Return Tipo.ASTERISCO
+        ElseIf (simbolo.Equals(Chr(34))) Then
+            Return Tipo.COMILLAS_DOBLE
+        ElseIf (simbolo.Equals("+")) Then
+            Return Tipo.MAS
+        ElseIf (simbolo.Equals("/")) Then
+            Return Tipo.DIVISION
+        ElseIf (simbolo.Equals(",")) Then
+            Return Tipo.COMA
+        ElseIf (simbolo.Equals("=")) Then
+            Return Tipo.IGUAL
+        ElseIf (simbolo.Equals("_")) Then
+            Return Tipo.GUION_BAJO
+        ElseIf (simbolo.Equals(".")) Then
+            Return Tipo.PUNTO
+        ElseIf (simbolo.Equals("-")) Then
+            Return Tipo.GUION_MEDIO
+        Else
+            Return Tipo.ERROR_LEXICO
+        End If
+    End Function
+
+    Private Function nombreSimbolo(tipo As Tipo) As String
+        If (tipo = Tipo.ID) Then
+            Return "Identificador"
+        ElseIf (tipo = Tipo.PALABRA_RESERVADA) Then
+            Return "Palabra Reservada"
+        ElseIf (tipo = Tipo.CADENA_DE_TEXTO) Then
+            Return "Cadena de Texto"
+        ElseIf (tipo = Tipo.NUMERO_ENTERO) Then
+            Return "# Entero"
+        ElseIf (tipo = Tipo.NUMERO_DECIMAL) Then
+            Return "# Decimal"
+        ElseIf (tipo = Tipo.LLAVE_IZQ) Then
+            Return "Simbolo {"
+        ElseIf (tipo = Tipo.LLAVE_DER) Then
+            Return "Simbolo }"
+        ElseIf (tipo = Tipo.PUNTO_Y_COMA) Then
+            Return "Simbolo ;"
+        ElseIf (tipo = Tipo.PARENTESIS_IZQ) Then
+            Return "Simbolo ("
+        ElseIf (tipo = Tipo.PARENTESIS_DER) Then
+            Return "Simbolo )"
+        ElseIf (tipo = Tipo.CORCHETE_IZQ) Then
+            Return "Simbolo ["
+        ElseIf (tipo = Tipo.CORCHETE_DER) Then
+            Return "Simbolo ]"
+        ElseIf (tipo = Tipo.DOS_PUNTOS) Then
+            Return "Simbolo :"
+        ElseIf (tipo = Tipo.ASTERISCO) Then
+            Return "Simbolo *"
+        ElseIf (tipo = Tipo.COMILLAS_DOBLE) Then
+            Return "Simbolo " + Chr(34).ToString
+        ElseIf (tipo = Tipo.MAS) Then
+            Return "Simbolo +"
+        ElseIf (tipo = Tipo.DIVISION) Then
+            Return " Simbolo /"
+        ElseIf (tipo = Tipo.COMA) Then
+            Return "Simbolo ,"
+        ElseIf (tipo = Tipo.IGUAL) Then
+            Return "Simbolo ="
+        ElseIf (tipo = Tipo.GUION_BAJO) Then
+            Return "Simbolo _"
+        ElseIf (tipo = Tipo.PUNTO) Then
+            Return "Simbolo ."
+        ElseIf (tipo = Tipo.GUION_MEDIO) Then
+            Return "Simbolo -"
+        Else
+            Return "ERROR LEXICO"
+        End If
+    End Function
 
 
     '------------------------------------------------------------
@@ -423,7 +513,7 @@ Public Class Form1
                 For Each ls In lista
                     Dim ls1 = New PdfPCell(New Phrase(c, fDig))
                     Dim ls2 = New PdfPCell(New Phrase(ls.getLexema, fDig))
-                    Dim ls3 = New PdfPCell(New Phrase(ls.getTipo.ToString.ToLower, fDig))
+                    Dim ls3 = New PdfPCell(New Phrase(nombreSimbolo(ls.getTipo), fDig))
                     Dim ls4 = New PdfPCell(New Phrase(ls.getLinea, fDig))
                     Dim ls5 = New PdfPCell(New Phrase(ls.getColumna, fDig))
 
@@ -703,7 +793,7 @@ Public Class Form1
         '------------------------------------------------------------
         Dim cadena2 = RichTextBox1.Lines
         For i = 0 To (cadena2.Length - 1)
-            analizar(cadena2.GetValue(i).ToString.ToLower + " ", i)
+            analizar(cadena2.GetValue(i).ToString.ToLower + " ", (i + 1))
         Next
 
         '------------------------------------------------------------
@@ -718,6 +808,8 @@ Public Class Form1
         '   GENERAR ARCHIVO DE SALIDA
         '------------------------------------------------------------
         generate()
+        Dim analizadorSintacto As AnalizadorSintactico = New AnalizadorSintactico
+        analizadorSintacto.parsear(listaTokensValidos)
 
         '------------------------------------------------------------
         '   VER LOS TOKENS VALIDOS
@@ -746,8 +838,6 @@ Public Class Form1
             generarReportesPDF(direccionArchivo, "TokensValidos_" + nombreArchivoS + ".pdf", listaTokensValidos, "tokens validos")
             generarReportesPDF(direccionArchivo, "TokensErroneos_" + nombreArchivoS + ".pdf", listaTokensErroneos, listaErrores, "tokens erroneos")
         End If
-
-
         Process.Start("explorer.exe", direccionArchivo)
     End Sub
 
@@ -919,10 +1009,6 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
     '-----------------------------------------------------------
     '   COLOREAR LOS LEXEMAS CON CHECKBOX'S
     '-----------------------------------------------------------
@@ -1025,48 +1111,51 @@ Public Class Form1
         Dim qs = txt.Replace(vbCrLf, " ").Replace(vbLf, "")
         Dim s = qs.ToLower.Split("}")
 
-        For Each ss In s
-            If (ss.Contains("variables{") Or ss.Contains("variables {")) Then
-                Dim tx = ss.Trim.Split("{")
-                For Each t In tx
-                    Dim funciones = t.Replace("variables", "").Trim.Split(";")
-                    For Each f In funciones
-                        If (f.Equals("") Or f.Equals(" ")) Then
-                        Else
-                            Dim vars = f.Trim.Split(":")
-                            Dim nVars = vars(0).Trim().Split(",")
-                            Dim asig = vars(1).Split("=")
-                            Dim tipo = asig(0)
-                            Dim valor
-                            Try
-                                valor = asig(1)
-                            Catch ex As Exception
-                                valor = "0"
-                            End Try
-                            For Each v In nVars
-                                If (listaVariables.contains(v.ToString)) Then
-                                Else
-                                    Dim existe = False
-                                    For Each e In listaVariables
-                                        If (e.getNombre.Equals(v.ToString)) Then
-                                            existe = True
-                                        End If
-                                    Next
-
-                                    If (existe = False) Then
-                                        listaVariables.add(New Variable(v.ToString, valor.ToString.Replace(Chr(34), ""), tipo.ToString))
+        Try
+            For Each ss In s
+                If (ss.Contains("variables{") Or ss.Contains("variables {")) Then
+                    Dim tx = ss.Trim.Split("{")
+                    For Each t In tx
+                        Dim funciones = t.Replace("variables", "").Trim.Split(";")
+                        For Each f In funciones
+                            If (f.Equals("") Or f.Equals(" ")) Then
+                            Else
+                                Dim vars = f.Trim.Split(":")
+                                Dim nVars = vars(0).Trim().Split(",")
+                                Dim asig = vars(1).Split("=")
+                                Dim tipo = asig(0)
+                                Dim valor
+                                Try
+                                    valor = asig(1)
+                                Catch ex As Exception
+                                    valor = "0"
+                                End Try
+                                For Each v In nVars
+                                    If (listaVariables.contains(v.ToString)) Then
                                     Else
-                                        listaErrores.Add("No puede crear la variable " + v.ToString + " porque ya esta definidia")
+                                        Dim existe = False
+                                        For Each e In listaVariables
+                                            If (e.getNombre.Equals(v.ToString)) Then
+                                                existe = True
+                                            End If
+                                        Next
+
+                                        If (existe = False) Then
+                                            listaVariables.add(New Variable(v.ToString, valor.ToString.Replace(Chr(34), ""), tipo.ToString))
+                                        Else
+                                            listaErrores.Add("No puede crear la variable " + v.ToString + " porque ya esta definidia")
+                                        End If
+
                                     End If
-
-                                End If
-                            Next
-                        End If
+                                Next
+                            End If
+                        Next
                     Next
-                Next
-            End If
-        Next
+                End If
+            Next
+        Catch ex As Exception
 
+        End Try
         'For Each l In listaVariables
         '    MsgBox("Variable| " + l.getNombre + " |Valor| " + l.getValor + " |Tipo| " + l.getTipo)
         'Next
@@ -1217,7 +1306,6 @@ Public Class Form1
                 '   Funcion SUMA que suma los valores dados
                 '------------------------------------------------------------
             ElseIf (i.ToString.Contains("suma(")) Then
-                MsgBox("[SUMA] " + i.ToString)
                 Dim v = i.ToString.Replace(")", "").Replace("suma(", "suma(,".Replace(Chr(34), "")).Trim.Split(",")
                 Dim suma = 0
 
