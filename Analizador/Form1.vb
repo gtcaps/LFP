@@ -1144,14 +1144,14 @@ Public Class Form1
                 '   Negrita
                 '------------------------------------------------------------
             ElseIf (i.ToString.Contains("[+")) Then
-                Dim r = i.ToString.Replace("[", "").Replace(Chr(34), "").Split("+")
+                Dim r = i.ToString.Trim.Replace("[", "").Replace(Chr(34), "").Split("+")
                 pdfDoc.Add(New Chunk(r(0) + " ", pdfFont))
                 pdfDoc.Add(New Chunk(r(1) + " ", pdfFontBold))
                 '------------------------------------------------------------
                 '   Subrayado
                 '------------------------------------------------------------
             ElseIf (i.ToString.Contains("[*")) Then
-                Dim r = i.ToString.Replace("[", "").Replace(Chr(34), "").Split("*")
+                Dim r = i.ToString.Trim.Replace("[", "").Replace(Chr(34), "").Split("*")
 
                 pdfDoc.Add(New Chunk(r(0) + "  ", pdfFont))
 
@@ -1166,7 +1166,7 @@ Public Class Form1
 
                 Dim ruta, tamX, tamY
                 Try
-                    pdfDoc.Add(New Chunk(r(0).ToString.Replace("imagen(", "") + vbNewLine))
+                    pdfDoc.Add(New Chunk(r(0).ToString.Trim.Replace("imagen(", "") + vbNewLine))
                     ruta = r(1)
                     tamX = r(2)
                     tamY = r(3)
@@ -1217,6 +1217,7 @@ Public Class Form1
                 '   Funcion SUMA que suma los valores dados
                 '------------------------------------------------------------
             ElseIf (i.ToString.Contains("suma(")) Then
+                MsgBox("[SUMA] " + i.ToString)
                 Dim v = i.ToString.Replace(")", "").Replace("suma(", "suma(,".Replace(Chr(34), "")).Trim.Split(",")
                 Dim suma = 0
 
@@ -1285,7 +1286,7 @@ Public Class Form1
 
                 For Each l In listaVariables
                     For Each vv In v
-                        If (l.getNombre.ToString.Equals(vv)) Then
+                        If (l.getNombre.ToString.Trim.Equals(vv)) Then
                             Try
                                 times *= CInt(l.getValor)
                             Catch ex As Exception
@@ -1330,7 +1331,6 @@ Public Class Form1
                 '   Funcion PROMEDIO 
                 '------------------------------------------------------------
             ElseIf (i.ToString.Contains("promedio(")) Then
-                MsgBox(i.ToString)
                 Dim v = i.ToString.Replace(")", "").Replace("promedio(", "promedio(,").Replace(Chr(34), "").Trim.Split(",")
                 Dim suma = 0
                 Dim n = 0
@@ -1403,7 +1403,7 @@ Public Class Form1
 
                             For Each variableLista In listaVariables
                                 Dim variableAux As Variable = variableLista
-                                If (variableAux.getNombre.ToLower.Equals(valorVar)) Then
+                                If (variableAux.getNombre.ToLower.Trim.Equals(valorVar)) Then
                                     var.setValor(variableAux.getValor)
                                     Exit For
                                 Else
@@ -1416,7 +1416,7 @@ Public Class Form1
                 Next
 
             Else
-                Dim pr = New Paragraph(i.ToString.Replace(Chr(34), ""), pdfFont)
+                Dim pr = New Paragraph(i.ToString.Trim.Replace(Chr(34), ""), pdfFont)
                 pr.SetLeading(0.5, interlineado)
                 pdfDoc.Add(pr)
             End If
