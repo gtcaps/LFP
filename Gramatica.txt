@@ -1,0 +1,74 @@
+BLOQUE -> INSTRUCCIONES { funcionesInstrucciones } BLOQUE'
+		| VARIABLES { declaracionVar } BLOQUE'
+		| TEXTO { funcionesTexto } BLOQUE'
+		
+BLOQUE' -> BLOQUE 
+		 | Epsilon
+
+funcionesInstrucciones -> INTERLINEADO(numero);     funcionesInstrucciones
+						| TAMANIO_LETRA(numero);    funcionesInstrucciones
+						| NOMBRE_ARCHIVO(cadena);   funcionesInstrucciones
+						| DIRECCION_ARCHIVO(cadena);funcionesInstrucciones
+						| Epsilon
+						
+						
+						
+declaracionVar -> ID declaracionVar'
+				| Epsilon 
+	
+declaracionVar'-> ,declaracionVar
+				| :tipoVariable
+	
+tipoVariable -> ENTERO asignacionEntero ; declaracionVar
+			  | CADENA asignacionCadena ; declaracionVar
+			  
+asignacionEntero -> = numero
+				  | Epsilon
+				
+asignacionCadena -> = cadena
+				  | Epsilon
+				  
+				  
+			  
+funcionesTexto -> IMAGEN( ID, NUMERO, NUMERO );
+				| [ a ];
+				| NUMEROS( b );
+				| LINEA_EN_BLANCO;
+				| /* ~~~~~~ */
+				| VAR[id];
+				| PROMEDIO ( d );
+				| SUMA ( d );
+				| RESTA ( d );
+				| MULTIPLLICAR ( d );
+				| DIVISION ( d );
+				| ASIGNAR ( id , f );
+				| Epsilon
+				
+				
+a -> + texto +
+   | * texto *
+			
+b -> cadena c
+	| ID c
+	| NUMERO c
+
+c -> ,b
+   | Epsilon
+   
+d -> numero e
+   | id  e
+   
+e -> ,d 
+   | Epsilon
+   
+f -> ID
+   | numero
+   | cadena
+   
+   
+   
+   
+   
+   
+   
+   
