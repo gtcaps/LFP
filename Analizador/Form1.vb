@@ -1370,7 +1370,7 @@ Public Class Form1
                             Try
                                 suma += CInt(l.getValor)
                             Catch ex As Exception
-                                MsgBox("No puedes usar la función suma con una cadena de texto")
+                                listaErrores.add("No puedes usar la función suma con una cadena de texto")
                             End Try
                         End If
                     Next
@@ -1399,6 +1399,14 @@ Public Class Form1
                                         resta = resta - CLng(l.getValor)
                                     End If
                                     cont += 1
+                                Else
+                                    If Not listaErrores.contains("No puedes usar la función resta con una cadena de texto") Then
+                                        listaErrores.add("No puedes usar la función resta con una cadena de texto")
+                                    End If
+                                End If
+                            Else
+                                If Not listaErrores.contains("No puedes usar la función resta con una cadena de texto") Then
+                                    listaErrores.add("No puedes usar la función resta con una cadena de texto")
                                 End If
                             End If
                         Next
@@ -1426,8 +1434,14 @@ Public Class Form1
                             Try
                                 times *= CInt(l.getValor)
                             Catch ex As Exception
-                                MsgBox("No puedes usar la función multiplicacion con una cadena de texto")
+                                If Not listaErrores.contains("No puedes usar la función multiplicación con una cadena de texto") Then
+                                    listaErrores.add("No puedes usar la función multiplicación con una cadena de texto")
+                                End If
                             End Try
+                        Else
+                            If Not listaErrores.contains("No puedes usar la función multiplicación con una cadena de texto") Then
+                                listaErrores.add("No puedes usar la función multiplicación con una cadena de texto")
+                            End If
                         End If
                     Next
                 Next
@@ -1455,6 +1469,14 @@ Public Class Form1
                                         division = division / CLng(l.getValor)
                                     End If
                                     cont += 1
+                                Else
+                                    If Not listaErrores.contains("No puedes usar la función division con una variable de texto") Then
+                                        listaErrores.add("No puedes usar la función division con una variable de texto")
+                                    End If
+                                End If
+                            Else
+                                If Not listaErrores.contains("No puedes usar la función division con una cadena de texto") Then
+                                    listaErrores.add("No puedes usar la función division con una cadena de texto")
                                 End If
                             End If
                         Next
@@ -1489,6 +1511,10 @@ Public Class Form1
                             suma += CInt(l.getValor)
                             'MsgBox("suma = " + suma.ToString)
                             n += 1
+                        Else
+                            If Not listaErrores.contains("No puedes usar la función promedio con una cadena de texto") Then
+                                listaErrores.add("No puedes usar la función promedio con una cadena de texto")
+                            End If
                         End If
                     Next
                 Next
@@ -1530,8 +1556,15 @@ Public Class Form1
                                             var.setValor(verificarVar.getValor.ToString)
                                         Else
                                             'listaErrores.Add("Asignación en la variable: " + v(1).ToString + " se esperara un valor númerico")
+                                            If Not listaErrores.contains("Asignación en la variable: " + v(1).ToString + " se esperara un valor númerico") Then
+                                                listaErrores.add("Asignación en la variable: " + v(1).ToString + " se esperara un valor númerico")
+                                            End If
                                         End If
                                         Exit For
+                                    Else
+                                        If Not listaErrores.contains("No puedes usar la variable " + valorVar + " porque no existe") Then
+                                            listaErrores.add("No puedes usar la variable " + valorVar + " porque no existe")
+                                        End If
                                     End If
                                 Next
                             End If
@@ -1548,6 +1581,10 @@ Public Class Form1
                             Next
                         End If
                         Exit For
+                    Else
+                        If Not listaErrores.contains("No puedes usar la variable " + nombreVar + " porque no existe") Then
+                            listaErrores.add("No puedes usar la variable " + nombreVar + " porque no existe")
+                        End If
                     End If
                 Next
 
@@ -1561,7 +1598,12 @@ Public Class Form1
         '------------------------------------------------------------
         '   Cerrar el Documento
         '------------------------------------------------------------
-        pdfDoc.Close()
+        Try
+            pdfDoc.Close()
+        Catch ex As Exception
+
+        End Try
+
 
 
     End Sub
