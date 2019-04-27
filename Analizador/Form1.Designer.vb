@@ -48,9 +48,13 @@ Partial Class Form1
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.lblNomArchivo = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Form1BindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox5 = New System.Windows.Forms.CheckBox()
         CType(Me.tabla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -59,9 +63,9 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(574, 55)
+        Me.Button1.Location = New System.Drawing.Point(1126, 55)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(265, 53)
+        Me.Button1.Size = New System.Drawing.Size(146, 53)
         Me.Button1.TabIndex = 2
         Me.Button1.Text = "ANALIZAR"
         Me.Button1.UseVisualStyleBackColor = True
@@ -70,9 +74,9 @@ Partial Class Form1
         '
         Me.tabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.tabla.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Token, Me.Lexema, Me.Fila, Me.Columna})
-        Me.tabla.Location = New System.Drawing.Point(574, 115)
+        Me.tabla.Location = New System.Drawing.Point(574, 55)
         Me.tabla.Name = "tabla"
-        Me.tabla.Size = New System.Drawing.Size(546, 505)
+        Me.tabla.Size = New System.Drawing.Size(546, 565)
         Me.tabla.TabIndex = 3
         '
         'Token
@@ -103,7 +107,7 @@ Partial Class Form1
         '
         Me.ProgressBar1.Location = New System.Drawing.Point(574, 626)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(523, 23)
+        Me.ProgressBar1.Size = New System.Drawing.Size(675, 23)
         Me.ProgressBar1.Step = 1
         Me.ProgressBar1.TabIndex = 5
         '
@@ -111,7 +115,7 @@ Partial Class Form1
         '
         Me.TextBox2.Enabled = False
         Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(1103, 625)
+        Me.TextBox2.Location = New System.Drawing.Point(1255, 625)
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(17, 24)
@@ -122,7 +126,7 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ArchivoToolStripMenuItem, Me.HerramientasToolStripMenuItem, Me.AyudaToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1134, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1284, 24)
         Me.MenuStrip1.TabIndex = 7
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -186,7 +190,7 @@ Partial Class Form1
         'AcercaDeToolStripMenuItem
         '
         Me.AcercaDeToolStripMenuItem.Name = "AcercaDeToolStripMenuItem"
-        Me.AcercaDeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AcercaDeToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.AcercaDeToolStripMenuItem.Text = "Acerca De "
         '
         'OpenFileDialog1
@@ -214,13 +218,27 @@ Partial Class Form1
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.CheckBox5)
+        Me.GroupBox1.Controls.Add(Me.CheckBox4)
+        Me.GroupBox1.Controls.Add(Me.CheckBox3)
+        Me.GroupBox1.Controls.Add(Me.CheckBox2)
         Me.GroupBox1.Controls.Add(Me.CheckBox1)
-        Me.GroupBox1.Location = New System.Drawing.Point(864, 49)
+        Me.GroupBox1.Location = New System.Drawing.Point(1126, 114)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(256, 60)
+        Me.GroupBox1.Size = New System.Drawing.Size(146, 505)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Colorear Lexemas"
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(13, 58)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(110, 17)
+        Me.CheckBox1.TabIndex = 0
+        Me.CheckBox1.Text = "Colorear Lexemas"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'RichTextBox1
         '
@@ -235,22 +253,52 @@ Partial Class Form1
         '
         Me.Form1BindingSource.DataSource = GetType(Analizador.Form1)
         '
-        'CheckBox1
+        'CheckBox2
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(73, 25)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(110, 17)
-        Me.CheckBox1.TabIndex = 0
-        Me.CheckBox1.Text = "Colorear Lexemas"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Location = New System.Drawing.Point(13, 121)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(110, 17)
+        Me.CheckBox2.TabIndex = 1
+        Me.CheckBox2.Text = "Colorear Numeros"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Location = New System.Drawing.Point(13, 189)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(110, 17)
+        Me.CheckBox3.TabIndex = 2
+        Me.CheckBox3.Text = "Colorear Cadenas"
+        Me.CheckBox3.UseVisualStyleBackColor = True
+        '
+        'CheckBox4
+        '
+        Me.CheckBox4.AutoSize = True
+        Me.CheckBox4.Location = New System.Drawing.Point(13, 264)
+        Me.CheckBox4.Name = "CheckBox4"
+        Me.CheckBox4.Size = New System.Drawing.Size(126, 17)
+        Me.CheckBox4.TabIndex = 3
+        Me.CheckBox4.Text = "Colorear Comentarios"
+        Me.CheckBox4.UseVisualStyleBackColor = True
+        '
+        'CheckBox5
+        '
+        Me.CheckBox5.AutoSize = True
+        Me.CheckBox5.Location = New System.Drawing.Point(13, 341)
+        Me.CheckBox5.Name = "CheckBox5"
+        Me.CheckBox5.Size = New System.Drawing.Size(110, 17)
+        Me.CheckBox5.TabIndex = 4
+        Me.CheckBox5.Text = "Colorear Simbolos"
+        Me.CheckBox5.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(1134, 661)
+        Me.ClientSize = New System.Drawing.Size(1284, 661)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.lblNomArchivo)
@@ -301,4 +349,8 @@ Partial Class Form1
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CheckBox5 As CheckBox
+    Friend WithEvents CheckBox4 As CheckBox
+    Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents CheckBox2 As CheckBox
 End Class

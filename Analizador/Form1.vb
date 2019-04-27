@@ -787,6 +787,11 @@ Public Class Form1
         tabla.Rows.Clear()
         TextBox2.Clear()
         ProgressBar1.Value = 0
+        nombreArchivoDefault = "salida.pdf"
+        interlineado = interlineadoDefault
+        tamanioLetra = tamanioLetraDefault
+        direccionArchivo = direccionArchivoDefault
+        nombreArchivoS = nombreArchivoDefault
 
         '------------------------------------------------------------
         '   Se realiza el analisis Lexico
@@ -870,7 +875,7 @@ Public Class Form1
         Next
 
         'For Each l In listaInstrucciones
-        '    TextBox1.AppendText(l.ToString + vbNewLine)
+        '    MsgBox(l.ToString + vbNewLine)
         'Next
     End Sub
 
@@ -1013,24 +1018,28 @@ Public Class Form1
     '   COLOREAR LOS LEXEMAS CON CHECKBOX'S
     '-----------------------------------------------------------
     'PALABRAS RESERVADAS
-    Private Sub colorearPalabrasReservadas()
+    Private Sub colorearPalabrasReservadas(color As Color)
         For Each pr In palabrasReservadas
             For i = 0 To (RichTextBox1.Text.LastIndexOf(pr))
                 RichTextBox1.Find(pr, i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
-                RichTextBox1.SelectionColor = Color.Blue
+                RichTextBox1.SelectionColor = color
             Next
         Next
     End Sub
 
     'NUMEROS
-    Private Sub colorearNumeros()
+    Private Sub colorearNumeros(color As Color)
         For Each pr In listaTokensValidos
             Dim tkn As Token = pr
             'MsgBox("Token: " + tkn.getlexema.ToString + " Tipo: " + tkn.getTipo.ToString)
-            If (tkn.getTipo.ToString.ToLower.Contains("numero")) Then
-
+            If (tkn.getTipo = Tipo.NUMERO_ENTERO) Then
                 For i = 0 To (RichTextBox1.Text.LastIndexOf(tkn.getlexema.ToString))
-                    RichTextBox1.SelectionBackColor = Color.Yellow
+                    RichTextBox1.SelectionBackColor = color
+                    RichTextBox1.Find(tkn.getlexema.ToString, i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
+                Next
+            ElseIf (tkn.getTipo = Tipo.NUMERO_DECIMAL) Then
+                For i = 0 To (RichTextBox1.Text.LastIndexOf(tkn.getlexema.ToString))
+                    RichTextBox1.SelectionBackColor = color
                     RichTextBox1.Find(tkn.getlexema.ToString, i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
                 Next
             End If
@@ -1038,70 +1047,109 @@ Public Class Form1
     End Sub
 
     'CADENAS DE TEXTO
-    Private Sub colorearCadenasDeTexto()
+    Private Sub colorearCadenasDeTexto(color As Color)
         For Each pr In listaTokensValidos
             Dim tkn As Token = pr
             'MsgBox("Token: " + tkn.getlexema.ToString + " Tipo: " + tkn.getTipo.ToString)
-            If (tkn.getTipo.ToString.ToLower.Contains("cadena")) Then
+            If (tkn.getTipo = Tipo.CADENA_DE_TEXTO) Then
                 For i = 0 To (RichTextBox1.Text.LastIndexOf(tkn.getlexema.ToString))
                     RichTextBox1.Find(tkn.getlexema.ToString, i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
-                    RichTextBox1.SelectionColor = Color.Green
+                    RichTextBox1.SelectionColor = color
                 Next
             End If
         Next
     End Sub
 
     'COMENTARIOS
-    Private Sub colorearComentarios()
+    Private Sub colorearComentarios(color As Color)
         For Each pr In listaComentarios
             For i = 0 To (RichTextBox1.Text.LastIndexOf(pr.ToString))
                 RichTextBox1.Find(pr.ToString, i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
-                RichTextBox1.SelectionBackColor = Color.Gray
+                RichTextBox1.SelectionBackColor = color
             Next
         Next
     End Sub
 
     'Simbolos
-    Private Sub colorearSimbolos()
+    Private Sub colorearSimbolos(color As Color)
         For Each pr In listaSimbolos
             For i = 0 To (RichTextBox1.Text.LastIndexOf(Chr(pr.ToString)))
                 RichTextBox1.Find(Chr(pr.ToString), i, RichTextBox1.TextLength, RichTextBoxFinds.MatchCase)
-                RichTextBox1.SelectionColor = Color.DarkOrange
+                RichTextBox1.SelectionColor = color
             Next
         Next
     End Sub
 
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-
         If (CheckBox1.Checked) Then
             If (listaTokensValidos.Count <> 0) Then
                 'PALABRAS RESERVADAS
-                colorearPalabrasReservadas()
-
-                'NUMEROS
-                colorearNumeros()
-
-                'CADENAS DE TEXTO
-                colorearCadenasDeTexto()
-
-                'COMENTARIOS
-                colorearComentarios()
-
-                'SIMBOLOS
-                colorearSimbolos()
+                colorearPalabrasReservadas(Color.Blue)
             Else
                 MsgBox("No se encontraron lexemas")
                 CheckBox1.Checked = False
             End If
-
-
         Else
-            RichTextBox1.SelectionColor = Color.Black
+            colorearPalabrasReservadas(Color.Black)
+            CheckBox1.Checked = False
         End If
+    End Sub
 
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If (CheckBox2.Checked) Then
+            If (listaTokensValidos.Count <> 0) Then
+                colorearNumeros(Color.Yellow)
+            Else
+                MsgBox("No se encontraron lexemas")
+                CheckBox2.Checked = False
+            End If
+        Else
+            colorearNumeros(Color.Transparent)
+            CheckBox2.Checked = False
+        End If
+    End Sub
 
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        If (CheckBox3.Checked) Then
+            If (listaTokensValidos.Count <> 0) Then
+                colorearCadenasDeTexto(Color.ForestGreen)
+            Else
+                MsgBox("No se encontraron lexemas")
+                CheckBox3.Checked = False
+            End If
+        Else
+            colorearCadenasDeTexto(Color.Black)
+            CheckBox3.Checked = False
+        End If
+    End Sub
 
+    Private Sub CheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox4.CheckedChanged
+        If (CheckBox4.Checked) Then
+            If (listaTokensValidos.Count <> 0) Then
+                colorearComentarios(Color.Gray)
+            Else
+                MsgBox("No se encontraron lexemas")
+                CheckBox4.Checked = False
+            End If
+        Else
+            colorearComentarios(Color.Transparent)
+            CheckBox4.Checked = False
+        End If
+    End Sub
+
+    Private Sub CheckBox5_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox5.CheckedChanged
+        If (CheckBox5.Checked) Then
+            If (listaTokensValidos.Count <> 0) Then
+                colorearSimbolos(Color.Orange)
+            Else
+                MsgBox("No se encontraron lexemas")
+                CheckBox5.Checked = False
+            End If
+        Else
+            colorearSimbolos(Color.Black)
+            CheckBox5.Checked = False
+        End If
     End Sub
 
     '------------------------------------------------------------
